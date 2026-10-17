@@ -1,85 +1,95 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
+
 body {
     background-image: url('background.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed; 
     background-size: 100% 100%;
 }
-.warpper h1{
+
+.warpper h1 {
     font-style: italic;
     font-size: 35px;
     text-align: center;
-    text-shadow: 20px;
-
-
 }
+
 .warpper {
     width: 420px;
     background: transparent;
-    border-radius:12px ;
+    border-radius: 12px;
     border: 1.05px solid gray;
     padding: 30px 40px;
 }
-.input-box input{
+
+.input-box input {
     width: 100%;
     height: 100%;
     font-style: oblique;
-    background: transparent ;
+    background: transparent;
     border: none;
     outline: none;
     border: 1.05px solid gray;
     border-radius: 50px;
     color: #fff;
+    padding: 0 20px; /* Keeps your typed text away from the curved edges */
 }
-.warpper .input-box{
+
+.warpper .input-box {
     width: 100%;
     height: 60px;
     margin: 30px 0;
 }
-.input-box input::placeholder{
+
+.input-box input::placeholder {
     color: ghostwhite;
 }
-.warpper .remeber-forgot{
+
+.warpper .remeber-forgot {
     display: flex;
     justify-content: space-between;
     font-size: 14px;
     margin: -15px 0 15px;
 }
-.remeber-forgot label input{
+
+.remeber-forgot label input {
     accent-color: #fff;
-    margin-right:3px ;
+    margin-right: 3px;
 }
 
-.warpper .btn{
+.warpper .btn {
     width: 100%;
     height: 35px;
     background: white;
     border: none;
-    outline: 0.1px;
+    outline: none;
     border-radius: 40px;
-    box-shadow: 0 0 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     cursor: pointer;
     font-weight: 300;
 }
-.remeber-forgot a{
+
+.remeber-forgot a {
     color: #fff;
     text-decoration: none;
     font-weight: 100;
 }
-.register-link p a{
+
+.register-link p a {
     color: #fff;
     text-decoration: none;
     font-weight: 200;
 }
-.register-link p a:hover{
+
+.register-link p a:hover {
     text-decoration: underline;
 }
-.warpper .register-link{
+
+.warpper .register-link {
     font-size: 15px;
     text-align: center;
     margin-top: 20px;
