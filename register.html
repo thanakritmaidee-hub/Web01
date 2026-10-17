@@ -2,36 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
     <link rel="stylesheet" href="register_style.css">
+    <title>Create Account</title>
 </head>
 <body>
 
-    <div class="wrapper">
-        <h1>Registration</h1>
-        <form>
-            <div class="input-box">
-                <input type="text" name="username" placeholder="Username" required>
-            </div>
-            <div class="input-box">
-                <input type="password" name="password" placeholder="Password" required>
-            </div>
-            <div class="input-box">
-                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-            </div>
-            <button type="submit" class="btn">Register</button>
-        </form>
-    </div>
+<div class="wrapper">
+    <form>
+        <h1 style="color:white;">Create Account</h1>
+        <div class="input-box">
+            <input type="text" name="username" placeholder="account name" required>
+        </div>
+        <div class="input-box">
+            <input type="password" name="password" placeholder="password" required>
+        </div>
+        <div class="input-box">
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+        </div>
+        <button type="submit" class="btn">Submit</button>
+    </form>
+</div>
+
+<!-- Supabase Script Integration -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-
   const SUPABASE_URL = 'https://ndyozspwgszeqdlkylct.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_tgg7CAGgYngY6HldzjGM0Q_BqlzTe5p';
   
   const { createClient } = supabase;
   const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
 
   document.querySelector('form').addEventListener('submit', async (e) => {
     e.preventDefault(); 
@@ -60,3 +59,6 @@
     }
   });
 </script>
+
+</body>
+</html>
