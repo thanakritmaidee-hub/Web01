@@ -2,22 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="register_style.css">
+    <link rel="stylesheet" href="style.css">
     <title>Login</title>
+    <style>
+        body {
+            background-image: url('background.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed; 
+            background-size: 100% 100%;
+        }
+    </style>
 </head>
 <body>
 
 <div class="warpper">
-    <!-- ❌ ห้ามมี action="/..." หรือ method="POST" เด็ดขาด ให้ใช้ <form> เปล่าๆ แบบนี้ -->
+    <!-- ✅ เอา action="/login" และ method="POST" ออกแล้ว -->
     <form>
         <h1 style="color:white;">Login</h1>
         <div class="input-box">
-            <input type="text" name="username" placeholder="account name" required>
+            <input type="text" name="username" placeholder="Username" required>
         </div>
         <div class="input-box">
             <input type="password" name="password" placeholder="password" required>
         </div>
+        <div class="remeber-forgot">
+            <label style="color:white;"><input type="checkbox">remember me</label>
+            <a href="#">Forgot password?</a>
+        </div>
         <button type="submit" class="btn">Login</button>
+        <div class="register-link">
+            <p style="color:white;">don't have an account? <a href="register.html">register</a></p>
+        </div>
     </form>
 </div>
 
@@ -31,14 +46,13 @@
   const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   document.querySelector('form').addEventListener('submit', async (e) => {
-    e.preventDefault(); // ป้องกันไม่ให้ฟอร์มรีหน้าเว็บหรือส่ง POST ไปที่ GitHub
+    e.preventDefault(); // ป้องกันการส่งฟอร์มแบบเก่าที่เป็นต้นเหตุ Error 405
 
     const username = e.target.username.value;
     const password = e.target.password.value;
 
     const email = username.includes('@') ? username : `${username}@domain.com`;
 
-    // ใช้คำสั่ง Login ของ Supabase
     const { data, error } = await db.auth.signInWithPassword({
       email: email,
       password: password,
@@ -48,7 +62,7 @@
       alert("Login failed: " + error.message);
     } else {
       alert("Login successful!");
-      window.location.href = "main_page.html"; // ล็อกอินผ่านแล้วเด้งไปหน้าหลัก
+      window.location.href = "main_page.html"; // เข้าสู่ระบบสำเร็จ พาไปหน้าหลัก
     }
   });
 </script>
