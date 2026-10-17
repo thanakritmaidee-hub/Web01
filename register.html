@@ -2,14 +2,16 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  // 2. Initialize Supabase with your copied credentials
+  // 2. Initialize Supabase correctly avoiding naming conflicts
   const SUPABASE_URL = 'https://ndyozspwgszeqdlkylct.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_tgg7CAGgYngY6HldzjGM0Q_BqlzTe5p';
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  
+  const { createClient } = supabase;
+  const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   // 3. Attach click event to form submit
   document.querySelector('form').addEventListener('submit', async (e) => {
-    e.preventDefault(); // Stop standard Flask form redirect
+    e.preventDefault(); // Stop standard form redirect
 
     const username = e.target.username.value;
     const password = e.target.password.value;
@@ -20,10 +22,10 @@
       return;
     }
 
-    // Supabase Auth expects an email. You can use username@example.com format or enter real emails
+    // Supabase Auth expects an email format
     const email = username.includes('@') ? username : `${username}@domain.com`;
 
-    const { data, error } = await supabase.auth.signUp({
+    const { data, error } = await db.auth.signUp({
       email: email,
       password: password,
     });
