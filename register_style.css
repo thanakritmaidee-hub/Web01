@@ -6,12 +6,17 @@
 }
 
 body {
-    background-image: url('/Web01/background.jpg');
+    background-image: url('background.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed; 
     background-size: 100% 100%;
-}
+    
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 .warpper h1 {
     font-style: italic;
     font-size: 35px;
