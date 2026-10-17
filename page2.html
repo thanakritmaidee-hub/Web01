@@ -16,14 +16,14 @@
 <body>
 
 <div class="warpper">
-    <!-- ❌ ห้ามมี action และ method="POST" เด็ดขาด ให้ใช้ <form> เปล่าๆ แบบนี้ -->
-    <form>
+    <!-- เพิ่ม id="login-form" เพื่อให้ JavaScript ควบคุมได้แม่นยำ -->
+    <form id="login-form">
         <h1 style="color:white;">Login</h1>
         <div class="input-box">
-            <input type="text" name="username" placeholder="Username" required>
+            <input type="text" id="username" name="username" placeholder="Username" required>
         </div>
         <div class="input-box">
-            <input type="password" name="password" placeholder="password" required>
+            <input type="password" id="password" name="password" placeholder="password" required>
         </div>
         <div class="remeber-forgot">
             <label style="color:white;"><input type="checkbox">remember me</label>
@@ -45,24 +45,35 @@
   const { createClient } = supabase;
   const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  document.querySelector('form').addEventListener('submit', async (e) => {
-    e.preventDefault(); // บรรทัดนี้สำคัญมาก ป้องกันไม่ให้ฟอร์มส่งข้อมูลแบบเก่าจนเกิด Error 405
+  // ดักจับการ submit ผ่าน id ของฟอร์มโดยตรง ป้องกัน Error 405 100%
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault(); // ป้องกันไม่ให้เบราว์เซอร์รีเฟรชหรือส่ง POST แบบเก่า
 
-    const username = e.target.username.value;
-    const password = e.target.password.value;
+    const usernameInput = document.getElementById('username').value.trim();
+    const passwordInput = document.getElementById('password').value.trim();
 
-    const email = username.includes('@') ? username : `${username}@domain.com`;
+    // แปลงรูปแบบอีเมลให้ตรงกับตอนสมัครสมาชิก
+    const email = usernameInput.includes('@') ? usernameInput : `${usernameInput}@domain.com`;
 
-    const { data, error } = await db.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
+    console.log("กำลังเข้าสู่ระบบด้วยอีเมล:", email);
 
-    if (error) {
-      alert("Login failed: " + error.message);
-    } else {
-      alert("Login successful!");
-      window.location.href = "main_page.html"; // ล็อกอินผ่านแล้วเด้งไปหน้า main_page.html
+    try {
+      const { data, error } = await db.auth.signInWithPassword({
+        email: email,
+        password: passwordInput,
+      });
+
+      if (error) {
+        console.error("ข้อผิดพลาดจาก Supabase:", error.message);
+        alert("Login failed: " + error.message);
+      } else {
+        console.log("เข้าสู่ระบบสำเร็จ:", data);
+        alert("Login successful!");
+        window.location.href = "main_page.html"; // พาไปหน้าหลัก
+      }
+    } catch (err) {
+      console.error("เกิดข้อผิดพลาดที่ไม่คาดคิด:", err);
+      alert("เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาตรวจสอบ Console (F12)");
     }
   });
 </script>
