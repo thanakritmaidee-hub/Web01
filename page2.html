@@ -16,7 +16,7 @@
 <body>
 
 <div class="warpper">
-    <!-- ✅ เอา action="/login" และ method="POST" ออกแล้ว -->
+    <!-- ❌ ห้ามมี action และ method="POST" เด็ดขาด ให้ใช้ <form> เปล่าๆ แบบนี้ -->
     <form>
         <h1 style="color:white;">Login</h1>
         <div class="input-box">
@@ -46,7 +46,7 @@
   const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   document.querySelector('form').addEventListener('submit', async (e) => {
-    e.preventDefault(); // ป้องกันการส่งฟอร์มแบบเก่าที่เป็นต้นเหตุ Error 405
+    e.preventDefault(); // บรรทัดนี้สำคัญมาก ป้องกันไม่ให้ฟอร์มส่งข้อมูลแบบเก่าจนเกิด Error 405
 
     const username = e.target.username.value;
     const password = e.target.password.value;
@@ -62,7 +62,7 @@
       alert("Login failed: " + error.message);
     } else {
       alert("Login successful!");
-      window.location.href = "main_page.html"; // เข้าสู่ระบบสำเร็จ พาไปหน้าหลัก
+      window.location.href = "main_page.html"; // ล็อกอินผ่านแล้วเด้งไปหน้า main_page.html
     }
   });
 </script>
