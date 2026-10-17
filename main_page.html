@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="styleIndex.css">
+    <title>Main Page</title>
     <style>
         body {
             background-image: url('background.jpg');
@@ -11,17 +12,17 @@
             background-size: 100% 100%;
         }
     </style>
-    <title>Index</title>
 </head>
 <body>
 
-<h1 style="color:white;">Hello who see this</h1>
+<h1 style="color:white;">Welcome to Main Page!</h1>
 <p style="color:white;">Created by Thanakrit Maidee</p>
+<!-- แสดงชื่อหรืออีเมลผู้ใช้ที่กำลังล็อกอิน -->
+<p id="user-email" style="color:white; font-weight: bold;"></p>
 
-<!-- เพิ่มปุ่มสำหรับไปหน้า Register และ Login ตรงนี้ -->
+<!-- ปุ่ม Logout -->
 <div style="margin: 20px 0;">
-    <a href="register.html"><button style="font-size: 20px; background-color: lightgreen; border-radius: 10px; padding: 8px 15px; cursor: pointer; margin-right: 10px;">Register</button></a>
-    <a href="page2.html"><button style="font-size: 20px; background-color: lightcoral; border-radius: 10px; padding: 8px 15px; cursor: pointer;">Login</button></a>
+    <button id="logout-btn" style="font-size: 20px; background-color: lightcoral; border-radius: 10px; padding: 8px 15px; cursor: pointer; border: none;">Logout</button>
 </div>
 
 <button style="font-size: 25px; background-color: lightskyblue; border-radius: 15px; cursor: pointer;">
@@ -30,10 +31,45 @@
 <br><br>
 
 <iframe width="560" height="315"
-src="https://www.youtube.com/embed/6RF1Zz5xcNg?si=zUyQFj_PW5525AnS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin">
+src="https://www.youtube.com/embed/6RF1Zz5xcNg?si=zUyQFj_PW5525AnS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-cross-origin">
 </iframe>
 
 <div class="background-image"></div>
-</body>
 
+<!-- Supabase Script สำหรับเช็ก Session และ Logout -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://ndyozspwgszeqdlkylct.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_tgg7CAGgYngY6HldzjGM0Q_BqlzTe5p';
+  
+  const { createClient } = supabase;
+  const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // 1. ตรวจสอบว่าผู้ใช้ล็อกอินเข้ามาหรือยัง
+  async function checkAuth() {
+    const { data: { user } } = await db.auth.getUser();
+    if (!user) {
+      alert("Please login first!");
+      window.location.href = "page2.html"; // ถ้ายังไม่ล็อกอิน ดีดกลับไปหน้า Login
+    } else {
+      // แสดงอีเมลของผู้ใช้ที่ล็อกอินบนหน้าจอ
+      document.getElementById('user-email').innerText = "Logged in as: " + user.email;
+    }
+  }
+
+  checkAuth();
+
+  // 2. ฟังก์ชันกดปุ่ม Logout
+  document.getElementById('logout-btn').addEventListener('click', async () => {
+    const { error } = await db.auth.signOut();
+    if (error) {
+      alert("Error logging out: " + error.message);
+    } else {
+      alert("Logged out successfully!");
+      window.location.href = "page2.html"; // ออกจากระบบแล้วพาไปหน้า Login
+    }
+  });
+</script>
+
+</body>
 </html>
