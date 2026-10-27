@@ -17,10 +17,9 @@
 
 <h1 style="color:white;">Welcome to Main Page!</h1>
 <p style="color:white;">Created by Thanakrit Maidee</p>
-<!-- แสดงชื่อหรืออีเมลผู้ใช้ที่กำลังล็อกอิน -->
+
 <p id="user-email" style="color:white; font-weight: bold;"></p>
 
-<!-- ปุ่ม Logout -->
 <div style="margin: 20px 0;">
     <button id="logout-btn" style="font-size: 20px; background-color: lightcoral; border-radius: 10px; padding: 8px 15px; cursor: pointer; border: none;">Logout</button>
 </div>
@@ -36,7 +35,7 @@ src="https://www.youtube.com/embed/6RF1Zz5xcNg?si=zUyQFj_PW5525AnS" title="YouTu
 
 <div class="background-image"></div>
 
-<!-- Supabase Script สำหรับเช็ก Session และ Logout -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   const SUPABASE_URL = 'https://ndyozspwgszeqdlkylct.supabase.co';
@@ -45,28 +44,28 @@ src="https://www.youtube.com/embed/6RF1Zz5xcNg?si=zUyQFj_PW5525AnS" title="YouTu
   const { createClient } = supabase;
   const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // 1. ตรวจสอบว่าผู้ใช้ล็อกอินเข้ามาหรือยัง
+
   async function checkAuth() {
     const { data: { user } } = await db.auth.getUser();
     if (!user) {
       alert("Please login first!");
-      window.location.href = "page2.html"; // ถ้ายังไม่ล็อกอิน ดีดกลับไปหน้า Login
+      window.location.href = "page2.html"; 
     } else {
-      // แสดงอีเมลของผู้ใช้ที่ล็อกอินบนหน้าจอ
+
       document.getElementById('user-email').innerText = "Logged in as: " + user.email;
     }
   }
 
   checkAuth();
 
-  // 2. ฟังก์ชันกดปุ่ม Logout
+
   document.getElementById('logout-btn').addEventListener('click', async () => {
     const { error } = await db.auth.signOut();
     if (error) {
       alert("Error logging out: " + error.message);
     } else {
       alert("Logged out successfully!");
-      window.location.href = "page2.html"; // ออกจากระบบแล้วพาไปหน้า Login
+      window.location.href = "page2.html"; 
     }
   });
 </script>
