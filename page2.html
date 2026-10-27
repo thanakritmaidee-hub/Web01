@@ -16,7 +16,7 @@
 <body>
 
 <div class="warpper">
-    <!-- เพิ่ม id="login-form" เพื่อให้ JavaScript ควบคุมได้แม่นยำ -->
+
     <form id="login-form">
         <h1 style="color:white;">Login</h1>
         <div class="input-box">
@@ -36,7 +36,6 @@
     </form>
 </div>
 
-<!-- Supabase Script สำหรับ Login -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   const SUPABASE_URL = 'https://ndyozspwgszeqdlkylct.supabase.co';
@@ -45,14 +44,13 @@
   const { createClient } = supabase;
   const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // ดักจับการ submit ผ่าน id ของฟอร์มโดยตรง ป้องกัน Error 405 100%
+
   document.getElementById('login-form').addEventListener('submit', async (e) => {
-    e.preventDefault(); // ป้องกันไม่ให้เบราว์เซอร์รีเฟรชหรือส่ง POST แบบเก่า
+    e.preventDefault(); 
 
     const usernameInput = document.getElementById('username').value.trim();
     const passwordInput = document.getElementById('password').value.trim();
 
-    // แปลงรูปแบบอีเมลให้ตรงกับตอนสมัครสมาชิก
     const email = usernameInput.includes('@') ? usernameInput : `${usernameInput}@domain.com`;
 
     console.log("กำลังเข้าสู่ระบบด้วยอีเมล:", email);
@@ -69,7 +67,7 @@
       } else {
         console.log("เข้าสู่ระบบสำเร็จ:", data);
         alert("Login successful!");
-        window.location.href = "main_page.html"; // พาไปหน้าหลัก
+        window.location.href = "main_page.html";
       }
     } catch (err) {
       console.error("เกิดข้อผิดพลาดที่ไม่คาดคิด:", err);
